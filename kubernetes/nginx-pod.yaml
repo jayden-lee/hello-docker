@@ -1,0 +1,11 @@
+apiVersion: v1 # 오브젝트 API 버전
+kind: Pod # 리소스 종류
+metadata:
+  name: my-nginx-pod # Pod 고유 이름
+spec:
+  containers:
+  - name: my-nginx-container # 컨테이너 이름
+    image: nginx:latest # 컨테이너 이미지
+    ports:
+    - containerPort: 80
+      protocol: TCP
