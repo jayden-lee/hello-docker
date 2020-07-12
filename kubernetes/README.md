@@ -8,6 +8,7 @@ kubectl get ${object-name}
 - pods
 - replicasets
 - deployment
+- namespaces
 
 ## Pod
 
@@ -41,4 +42,24 @@ kubectl apploy -f replicaset-nginx.yaml
 ### Deployment 생성
 ```bash
 kubectl apploy -f deployment-nginx.yaml
+```
+
+## Service
+
+## Namespace
+> 리소스를 논리적으로 구분하기 위해 Namespace 오브젝트를 제공한다.
+
+### Namesapce 생성
+```bash
+kubectl create namespace development
+```
+
+### 특정 Namespace의 Pod, Service 목록 출력
+```bash
+kubectl get pods,services -n development
+```
+
+### 서비스의 DNS 이름에 대한 FQDN
+```bash
+<서비스 이름>.<네임스페이스 이름>.svc.cluster.local
 ```
