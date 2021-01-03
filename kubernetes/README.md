@@ -11,6 +11,24 @@ kubectl get ${object-name}
 - namespaces
 
 ## Pod
+> Pod 안에는 독립적인 서비스를 올릴 수 있는 컨테이너가 구성되어 있다. 컨테이너는 Service와 연결할 수 있도록 port를 가지고 있다.
+
+### Pod Template
+```
+apiVersion: v1 # 오브젝트 API 버전
+kind: Pod # 리소스 종류
+metadata:
+  name: my-nginx-pod # Pod 고유 이름
+  labels:
+    app: nginx 
+spec:
+  containers:
+  - name: my-nginx-container # 컨테이너 이름
+    image: nginx:latest # 컨테이너 이미지
+    ports:
+    - containerPort: 80
+      protocol: TCP
+```
 
 ### container의 bash shell 실행
 ```bash
@@ -45,6 +63,31 @@ kubectl apploy -f deployment-nginx.yaml
 ```
 
 ## Service
+> Service는 관리하는 Pod들을 연결하고 외부에서 접근할 수 있도록 엔드포인트를 제공한다. 여러 Pod 들을 로드밸런싱 해주며 고유한 DNS 이름을 가질 수 있다. Pod는 IP 가지고 있지만 클러스터 내에서만 접근이 가능하며, 새로 생성될 때마다 매번 IP가 변경된다.
+
+쿠버네티스 `ServiceTypes`는 원하는 서비스 종류를 지정할 수 있도록 해준다. 기본 값은 `ClusterIP` 이다.
+
+- ClusterIP
+- NodePort
+- LoadBalancer
+- ExternalName
+
+### Service Template
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-name
+spec:
+  selector:
+    app: pod
+  ports:
+  - port: 80
+    targetPort: 8080
+type: ClusterIP
+```
+
 
 ## Namespace
 > 리소스를 논리적으로 구분하기 위해 Namespace 오브젝트를 제공한다.
